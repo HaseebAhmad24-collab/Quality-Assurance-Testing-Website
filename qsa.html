@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Software Testing Platform - Wizard Fix</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #0a0a14);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      background: #1c1c1ccc;
+      max-width: 480px;
+      width: 100%;
+      padding: 30px 40px 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      position: relative;
+    }
+    h2 {
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #e0e0e0;
+      text-shadow: 0 1px 4px #000;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+    h2 i { color: #00adb5; }
+    form { width: 100%; }
+    .step { display: none; }
+    .step.active { display: block; }
+    label {
+      display: block;
+      margin: 15px 0 6px;
+      font-weight: 600;
+      color: #ccc;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+      background: #393e46;
+      color: #eeeeee;
+      box-shadow: inset 0 0 6px #000000;
+      transition: box-shadow 0.3s ease;
+    }
+    input:focus, select:focus {
+      box-shadow: 0 0 12px #00adb5;
+    }
+    .options-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 10px;
+      justify-content: center;
+    }
+    .option-card {
+      flex: 1 1 140px;
+      background: #2c2c2ccc;
+      border-radius: 12px;
+      padding: 20px 10px;
+      text-align: center;
+      color: #eeeeee;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.3s, background-color 0.3s;
+      user-select: none;
+    }
+    .option-card i {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      color: #00adb5;
+    }
+    .option-card:hover {
+      background: #00adb5;
+      color: #1c1c1c;
+    }
+    .option-card:hover i {
+      color: #1c1c1c;
+    }
+    .option-card.selected {
+      background: #00adb5;
+      color: #1c1c1c;
+      border-color: #00fff5;
+      font-weight: 700;
+    }
+    .selected i {
+      color: #1c1c1c;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+    button {
+      padding: 14px 28px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 10px;
+      background: #2f2f2f;
+      color: #eeeeee;
+      cursor: pointer;
+      box-shadow: 0 0 12px #000;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+      min-width: 100px;
+    }
+    button:disabled {
+      background: #444;
+      color: #777;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    button:hover:not(:disabled) {
+      background: #00adb5;
+      color: #1c1c1c;
+    }
+    .progress-container {
+      margin-top: 25px;
+      height: 18px;
+      background: #222;
+      border-radius: 9px;
+      overflow: hidden;
+      box-shadow: inset 0 0 8px #000;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #00bfa5, #1de9b6);
+      width: 0;
+      transition: width 0.5s ease;
+    }
+    @media(max-width: 500px) {
+      .container { padding: 25px 20px 35px; }
+      .option-card { flex-basis: 100%; }
+      .buttons { flex-direction: column; gap: 16px; }
+      button { width: 100%; min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 💡 Here starts the actual app content -->
+<div class="container">
+  <section class="step active" id="step-1">
+    <h2><i class="fas fa-user-circle"></i> Login / Sign Up</h2>
+    <form id="form-login">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" placeholder="you@example.com" required />
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="At least 6 characters" minlength="6" required />
+      <div class="buttons">
+        <div></div>
+        <button type="submit" id="btn-to-step2" disabled>Next <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </form>
+  </section>
+
+  <section class="step" id="step-2">
+    <h2><i class="fas fa-search"></i> What do you want us to test?</h2>
+    <div class="options-grid">
+      <div class="option-card" data-value="website"><i class="fas fa-globe"></i> Website</div>
+      <div class="option-card" data-value="app"><i class="fas fa-mobile-alt"></i> Mobile App</div>
+      <div class="option-card" data-value="software"><i class="fas fa-desktop"></i> Software</div>
+    </div>
+    <div class="buttons">
+      <button type="button" id="btn-back-to-step1"><i class="fas fa-arrow-left"></i> Back</button>
+      <button type="button" id="btn-to-step3" disabled>Next <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </section>
+
+  <section class="step" id="step-3">
+    <h2><i class="fas fa-tasks"></i> What specifically?</h2>
+    <div class="options-grid">
+      <div class="option-card" data-value="functionality"><i class="fas fa-cogs"></i> Functionality</div>
+      <div class="option-card" data-value="uiux"><i class="fas fa-paint-brush"></i> UI / UX</div>
+      <div class="option-card" data-value="performance"><i class="fas fa-tachometer-alt"></i> Performance</div>
+      <div class="option-card" data-value="security"><i class="fas fa-shield-alt"></i> Security</div>
+    </div>
+    <div class="buttons">
+      <button type="button" id="btn-back-to-step2"><i class="fas fa-arrow-left"></i> Back</button>
+      <button type="button" id="btn-to-step4" disabled>Next <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </section>
+
+  <section class="step" id="step-4">
+    <h2><i class="fas fa-credit-card"></i> Payment</h2>
+    <form id="form-payment">
+      <label>Choose Payment Method</label>
+      <div class="options-grid">
+        <div class="option-card" data-value="credit"><i class="fas fa-credit-card"></i> Credit Card</div>
+        <div class="option-card" data-value="paypal"><i class="fab fa-paypal"></i> PayPal</div>
+        <div class="option-card" data-value="bitcoin"><i class="fab fa-bitcoin"></i> Bitcoin</div>
+      </div>
+      <div id="payment-details" style="margin-top: 20px;"></div>
+      <div class="buttons">
+        <button type="button" id="btn-back-to-step3"><i class="fas fa-arrow-left"></i> Back</button>
+        <button type="submit" id="submit-payment" disabled>Pay Now <i class="fas fa-lock"></i></button>
+      </div>
+    </form>
+  </section>
+
+  <section class="step" id="step-5">
+    <h2><i class="fas fa-thumbs-up"></i> Thank you for choosing us!</h2>
+    <p>We will process your request and provide results in a few working days. Stay tuned!</p>
+    <div class="buttons">
+      <button type="button" id="btn-back-to-step4"><i class="fas fa-arrow-left"></i> Back</button>
+    </div>
+  </section>
+
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+</div>
+
+<script>
+  const steps = Array.from(document.querySelectorAll(".step"));
+  const progressBar = document.getElementById("progress-bar");
+  let currentStep = 0;
+
+  function showStep(index) {
+    steps.forEach((step, i) => {
+      step.classList.toggle("active", i === index);
+    });
+    progressBar.style.width = ((index + 1) / steps.length) * 100 + "%";
+    currentStep = index;
+  }
+
+  document.getElementById("form-login").addEventListener("input", () => {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    document.getElementById("btn-to-step2").disabled = !(email && password.length >= 6);
+  });
+
+  document.getElementById("form-login").addEventListener("submit", (e) => {
+    e.preventDefault();
+    showStep(1);
+  });
+
+  function handleCardSelection(stepIndex, nextButtonId) {
+    const step = steps[stepIndex];
+    const cards = step.querySelectorAll(".option-card");
+    const nextBtn = document.getElementById(nextButtonId);
+
+    cards.forEach(card => {
+      card.addEventListener("click", () => {
+        cards.forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        nextBtn.disabled = false;
+      });
+    });
+  }
+
+  handleCardSelection(1, "btn-to-step3");
+  handleCardSelection(2, "btn-to-step4");
+  handleCardSelection(3, "submit-payment");
+
+  document.getElementById("btn-to-step3").addEventListener("click", () => showStep(2));
+  document.getElementById("btn-to-step4").addEventListener("click", () => showStep(3));
+  document.getElementById("btn-back-to-step1").addEventListener("click", () => showStep(0));
+  document.getElementById("btn-back-to-step2").addEventListener("click", () => showStep(1));
+  document.getElementById("btn-back-to-step3").addEventListener("click", () => showStep(2));
+
+  document.getElementById("form-payment").addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("✅ Payment processed! 🎉");
+    showStep(4); // Move to final step
+  });
+
+  document.getElementById("btn-back-to-step4").addEventListener("click", () => showStep(3));
+</script>
+
+</body>
+</html>
