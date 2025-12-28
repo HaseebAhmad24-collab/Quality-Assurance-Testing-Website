@@ -151,11 +151,51 @@
       width: 0;
       transition: width 0.5s ease;
     }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #00adb5, #1de9b6);
+      color: #1c1c1c;
+      padding: 16px 24px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 173, 181, 0.3);
+      font-weight: 600;
+      font-size: 1rem;
+      z-index: 9999;
+      animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s;
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+    }
     @media(max-width: 500px) {
       .container { padding: 25px 20px 35px; }
       .option-card { flex-basis: 100%; }
       .buttons { flex-direction: column; gap: 16px; }
       button { width: 100%; min-width: unset; }
+      .toast {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        padding: 14px 20px;
+      }
     }
   </style>
 </head>
@@ -239,6 +279,14 @@
   const progressBar = document.getElementById("progress-bar");
   let currentStep = 0;
 
+  function showToast(message) {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  }
+
   function showStep(index) {
     steps.forEach((step, i) => {
       step.classList.toggle("active", i === index);
@@ -284,7 +332,7 @@
 
   document.getElementById("form-payment").addEventListener("submit", (e) => {
     e.preventDefault();
-    alert("✅ Payment processed! 🎉");
+    showToast("✅ Payment processed! 🎉");
     showStep(4); // Move to final step
   });
 
