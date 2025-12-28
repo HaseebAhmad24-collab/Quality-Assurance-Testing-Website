@@ -5,229 +5,267 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Software Testing Platform - Wizard Fix</title>
 
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
-    /* Nayi Theme: Royal Purple & Gold */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       height: 100%;
       font-family: 'Poppins', sans-serif;
-      /* Naya Gradient Background */
-      background: linear-gradient(135deg, #2d1b4e, #120b21);
+      background: linear-gradient(135deg, #1e1e2f, #0a0a14);
       color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
     }
     .container {
-      /* Glassmorphism Effect */
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
+      background: #1c1c1ccc;
       max-width: 480px;
       width: 100%;
       padding: 30px 40px 40px;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
       position: relative;
     }
     h2 {
       font-weight: 600;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       text-align: center;
-      color: #ffd700; /* Gold Color */
-      text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+      color: #e0e0e0;
+      text-shadow: 0 1px 4px #000;
       display: flex;
-      gap: 12px;
+      gap: 10px;
       justify-content: center;
       align-items: center;
     }
-    h2 i { color: #ffd700; }
+    h2 i { color: #00adb5; }
     form { width: 100%; }
     .step { display: none; }
     .step.active { display: block; }
     label {
       display: block;
-      margin: 15px 0 8px;
-      font-weight: 500;
-      color: #dfd3ff;
+      margin: 15px 0 6px;
+      font-weight: 600;
+      color: #ccc;
     }
     input, select {
       width: 100%;
-      padding: 14px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: none;
       font-size: 1rem;
       outline: none;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      transition: all 0.3s ease;
+      background: #393e46;
+      color: #eeeeee;
+      box-shadow: inset 0 0 6px #000000;
+      transition: box-shadow 0.3s ease;
     }
     input:focus, select:focus {
-      border-color: #ffd700;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 12px #00adb5;
     }
     .options-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 15px;
-      margin-top: 15px;
+      gap: 18px;
+      margin-top: 10px;
       justify-content: center;
     }
     .option-card {
-      flex: 1 1 130px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      padding: 25px 15px;
+      flex: 1 1 140px;
+      background: #2c2c2ccc;
+      border-radius: 12px;
+      padding: 20px 10px;
       text-align: center;
-      color: #fff;
+      color: #eeeeee;
       font-weight: 600;
+      font-size: 1.1rem;
       cursor: pointer;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid transparent;
+      transition: border-color 0.3s, background-color 0.3s;
+      user-select: none;
     }
     .option-card i {
-      font-size: 2.2rem;
-      margin-bottom: 15px;
-      color: #bb86fc; /* Purple accent */
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      color: #00adb5;
     }
     .option-card:hover {
-      transform: translateY(-5px);
-      background: rgba(187, 134, 252, 0.1);
-      border-color: #ffd700;
+      background: #00adb5;
+      color: #1c1c1c;
+    }
+    .option-card:hover i {
+      color: #1c1c1c;
     }
     .option-card.selected {
-      background: #ffd700;
-      color: #000;
-      border-color: #fff;
+      background: #00adb5;
+      color: #1c1c1c;
+      border-color: #00fff5;
+      font-weight: 700;
     }
-    .option-card.selected i {
-      color: #000;
+    .selected i {
+      color: #1c1c1c;
     }
     .buttons {
       display: flex;
       justify-content: space-between;
-      margin-top: 35px;
-      gap: 15px;
+      margin-top: 30px;
     }
     button {
-      padding: 14px 25px;
+      padding: 14px 28px;
       font-weight: 600;
+      font-size: 1.1rem;
       border: none;
-      border-radius: 12px;
-      background: #4a307d;
-      color: #fff;
+      border-radius: 10px;
+      background: #2f2f2f;
+      color: #eeeeee;
       cursor: pointer;
-      transition: all 0.3s ease;
-      flex: 1;
+      box-shadow: 0 0 12px #000;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+      min-width: 100px;
     }
     button:disabled {
-      background: #2a1e42;
-      color: #666;
+      background: #444;
+      color: #777;
       cursor: not-allowed;
+      box-shadow: none;
     }
     button:hover:not(:disabled) {
-      background: #ffd700;
-      color: #000;
-      transform: scale(1.02);
+      background: #00adb5;
+      color: #1c1c1c;
     }
     .progress-container {
-      margin-top: 30px;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
+      margin-top: 25px;
+      height: 18px;
+      background: #222;
+      border-radius: 9px;
       overflow: hidden;
+      box-shadow: inset 0 0 8px #000;
     }
     .progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, #bb86fc, #ffd700);
+      background: linear-gradient(90deg, #00bfa5, #1de9b6);
       width: 0;
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: width 0.5s ease;
     }
     .toast {
       position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: #ffd700;
-      color: #000;
-      padding: 15px 30px;
-      border-radius: 50px;
-      font-weight: 700;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-      z-index: 10000;
-      animation: slideIn 0.5s ease forwards;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #00adb5, #1de9b6);
+      color: #1c1c1c;
+      padding: 16px 24px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 173, 181, 0.3);
+      font-weight: 600;
+      font-size: 1rem;
+      z-index: 9999;
+      animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s;
     }
     @keyframes slideIn {
-      from { transform: translateY(100px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+    }
+    @media(max-width: 500px) {
+      .container { padding: 25px 20px 35px; }
+      .option-card { flex-basis: 100%; }
+      .buttons { flex-direction: column; gap: 16px; }
+      button { width: 100%; min-width: unset; }
+      .toast {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        padding: 14px 20px;
+      }
     }
   </style>
 </head>
 <body>
 
+<!-- 💡 Here starts the actual app content -->
 <div class="container">
   <section class="step active" id="step-1">
-    <h2><i class="fas fa-shield-alt"></i> Secure Access</h2>
+    <h2><i class="fas fa-user-circle"></i> Login / Sign Up</h2>
     <form id="form-login">
-      <label>Email Address</label>
-      <input type="email" id="email" placeholder="name@domain.com" required />
-      <label>Password</label>
-      <input type="password" id="password" placeholder="••••••••" minlength="6" required />
+      <label for="email">Email Address</label>
+      <input type="email" id="email" placeholder="you@example.com" required />
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="At least 6 characters" minlength="6" required />
       <div class="buttons">
-        <button type="submit" id="btn-to-step2" disabled>Get Started <i class="fas fa-chevron-right"></i></button>
+        <div></div>
+        <button type="submit" id="btn-to-step2" disabled>Next <i class="fas fa-arrow-right"></i></button>
       </div>
     </form>
   </section>
 
   <section class="step" id="step-2">
-    <h2><i class="fas fa-layer-group"></i> Choose Platform</h2>
+    <h2><i class="fas fa-search"></i> What do you want us to test?</h2>
     <div class="options-grid">
-      <div class="option-card" data-value="website"><i class="fas fa-globe-americas"></i> Website</div>
-      <div class="option-card" data-value="app"><i class="fas fa-mobile-button"></i> App</div>
-      <div class="option-card" data-value="software"><i class="fas fa-terminal"></i> Systems</div>
+      <div class="option-card" data-value="website"><i class="fas fa-globe"></i> Website</div>
+      <div class="option-card" data-value="app"><i class="fas fa-mobile-alt"></i> Mobile App</div>
+      <div class="option-card" data-value="software"><i class="fas fa-desktop"></i> Software</div>
     </div>
     <div class="buttons">
-      <button type="button" id="btn-back-to-step1">Back</button>
-      <button type="button" id="btn-to-step3" disabled>Next</button>
+      <button type="button" id="btn-back-to-step1"><i class="fas fa-arrow-left"></i> Back</button>
+      <button type="button" id="btn-to-step3" disabled>Next <i class="fas fa-arrow-right"></i></button>
     </div>
   </section>
 
   <section class="step" id="step-3">
-    <h2><i class="fas fa-vial"></i> Analysis Type</h2>
+    <h2><i class="fas fa-tasks"></i> What specifically?</h2>
     <div class="options-grid">
-      <div class="option-card" data-value="functionality"><i class="fas fa-microchip"></i> Core Logic</div>
-      <div class="option-card" data-value="uiux"><i class="fas fa-wand-magic-sparkles"></i> Design</div>
-      <div class="option-card" data-value="performance"><i class="fas fa-bolt"></i> Speed</div>
-      <div class="option-card" data-value="security"><i class="fas fa-user-shield"></i> Safety</div>
+      <div class="option-card" data-value="functionality"><i class="fas fa-cogs"></i> Functionality</div>
+      <div class="option-card" data-value="uiux"><i class="fas fa-paint-brush"></i> UI / UX</div>
+      <div class="option-card" data-value="performance"><i class="fas fa-tachometer-alt"></i> Performance</div>
+      <div class="option-card" data-value="security"><i class="fas fa-shield-alt"></i> Security</div>
     </div>
     <div class="buttons">
-      <button type="button" id="btn-back-to-step2">Back</button>
-      <button type="button" id="btn-to-step4" disabled>Next</button>
+      <button type="button" id="btn-back-to-step2"><i class="fas fa-arrow-left"></i> Back</button>
+      <button type="button" id="btn-to-step4" disabled>Next <i class="fas fa-arrow-right"></i></button>
     </div>
   </section>
 
   <section class="step" id="step-4">
-    <h2><i class="fas fa-wallet"></i> Checkout</h2>
+    <h2><i class="fas fa-credit-card"></i> Payment</h2>
     <form id="form-payment">
+      <label>Choose Payment Method</label>
       <div class="options-grid">
-        <div class="option-card" data-value="credit"><i class="fas fa-credit-card"></i> Card</div>
+        <div class="option-card" data-value="credit"><i class="fas fa-credit-card"></i> Credit Card</div>
         <div class="option-card" data-value="paypal"><i class="fab fa-paypal"></i> PayPal</div>
+        <div class="option-card" data-value="bitcoin"><i class="fab fa-bitcoin"></i> Bitcoin</div>
       </div>
+      <div id="payment-details" style="margin-top: 20px;"></div>
       <div class="buttons">
-        <button type="button" id="btn-back-to-step3">Back</button>
-        <button type="submit" id="submit-payment" disabled>Complete Order <i class="fas fa-check-double"></i></button>
+        <button type="button" id="btn-back-to-step3"><i class="fas fa-arrow-left"></i> Back</button>
+        <button type="submit" id="submit-payment" disabled>Pay Now <i class="fas fa-lock"></i></button>
       </div>
     </form>
   </section>
 
   <section class="step" id="step-5">
-    <div style="text-align: center;">
-        <i class="fas fa-circle-check" style="font-size: 4rem; color: #ffd700; margin-bottom: 20px;"></i>
-        <h2>Order Confirmed!</h2>
-        <p style="color: #dfd3ff; line-height: 1.6;">Our expert QA engineers are ready. You will receive a SonarQube report link via email shortly.</p>
+    <h2><i class="fas fa-thumbs-up"></i> Thank you for choosing us!</h2>
+    <p>We will process your request and provide results in a few working days. Stay tuned!</p>
+    <div class="buttons">
+      <button type="button" id="btn-back-to-step4"><i class="fas fa-arrow-left"></i> Back</button>
     </div>
   </section>
 
@@ -246,10 +284,7 @@
     toast.className = "toast";
     toast.textContent = message;
     document.body.appendChild(toast);
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 500);
-    }, 2500);
+    setTimeout(() => toast.remove(), 3000);
   }
 
   function showStep(index) {
@@ -297,9 +332,11 @@
 
   document.getElementById("form-payment").addEventListener("submit", (e) => {
     e.preventDefault();
-    showToast("Transaction Successful!");
-    showStep(4);
+    showToast("✅ Payment processed! 🎉");
+    showStep(4); // Move to final step
   });
+
+  document.getElementById("btn-back-to-step4").addEventListener("click", () => showStep(3));
 </script>
 
 </body>
